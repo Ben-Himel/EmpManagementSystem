@@ -16,9 +16,17 @@ namespace EmpManagementSystem.Controllers
         public IActionResult Index()
         {
             return View();
+
+            int a = 50, b = 0;
+            int result = a / b;
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult About()
         {
             return View();
         }

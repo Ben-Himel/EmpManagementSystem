@@ -22,6 +22,12 @@ namespace EmpManagementSystem.Controllers
             return View(employee);
         }
 
+        public IActionResult About()
+        {
+            return View();
+        }
+
+
 
         [HttpPost]
         public async Task<ActionResult> Create(Employee obj, IFormFile file)

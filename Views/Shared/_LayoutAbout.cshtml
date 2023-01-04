@@ -1,0 +1,36 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_LayoutAbout</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/EmpManagementSystem.styles.css" asp-append-version="true" />
+</head>
+<body style="background-color:brown">
+    
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody() @*displays content*@
+        </main>
+    </div>
+
+    <foooter class="border-top footer text-black fixed-bottom" style="padding:10px">
+        <div class="container">
+            @RenderSection("footersection", required:false) @*rendersections usualy false so it isn't forced to be used in the view.*@
+        </div>
+    </foooter>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    
+</body>
+</html>

@@ -1,4 +1,5 @@
 ﻿using EmpManagementSystem.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -13,12 +14,13 @@ namespace EmpManagementSystem.Controllers
             _logger = logger;
         }
 
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();
 
-            int a = 50, b = 0;
-            int result = a / b;
+            //int a = 50, b = 0;
+            //int result = a / b;
         }
 
         public IActionResult Privacy()

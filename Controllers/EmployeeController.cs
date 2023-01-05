@@ -1,6 +1,7 @@
 ﻿using EmpManagementSystem.Models;
 using EmpManagementSystem.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EmpManagementSystem.Controllers
 {
@@ -15,6 +16,7 @@ namespace EmpManagementSystem.Controllers
         }
 
         //get request
+        [Authorize(Roles ="Admin")]
         public IActionResult Create()
         {
             var employee = new Employee();
@@ -26,8 +28,6 @@ namespace EmpManagementSystem.Controllers
         {
             return View();
         }
-
-
 
         [HttpPost]
         public async Task<ActionResult> Create(Employee obj, IFormFile file)
@@ -51,6 +51,7 @@ namespace EmpManagementSystem.Controllers
         }
 
 
+        [Authorize(Roles ="Employee")]
         public IActionResult Index()
         {
             IndexViewModel model = new IndexViewModel();
@@ -58,6 +59,7 @@ namespace EmpManagementSystem.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "Employee")]
         public IActionResult Details(int? id)
         {
             var emp = cRUD.GetEmployee(id);
@@ -68,8 +70,8 @@ namespace EmpManagementSystem.Controllers
             return View(emp);
         }
 
-
         //get method
+        [Authorize(Roles = "Admin")]
         public IActionResult Edit(int id)
         {
             var emp = cRUD.GetEmployee(id);
@@ -87,7 +89,7 @@ namespace EmpManagementSystem.Controllers
             ViewBag.Message = "Error editing employee";
             return View(obj);
         }
-
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id) 
         {
             cRUD.DeleteEmployee(id);

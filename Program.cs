@@ -1,6 +1,9 @@
 using EmpManagementSystem.Models;
 using EmpManagementSystem.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using EmpManagementSystem.Models;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,12 @@ builder.Services.AddScoped<IFileUpload, FileUpload>();
 
 //connection to full SQL database
 builder.Services.AddDbContext<EmployeeContext>(options => options.UseSqlServer("Server=localhost;Database=CCAD9Demo;Trusted_Connection=true;TrustServerCertificate=True; MultipleActiveResultSets=True"));
+builder.Services.AddIdentity<User, IdentityRole>(Options =>
+{
+    Options.Lockout.MaxFailedAccessAttempts = 5;
+}).AddEntityFrameworkStores<UserContext>();
 
+builder.Services.AddDbContext<UserContext>(options => options.UseSqlServer("Server=localhost;Database=CCAD9DemoUsers;TrustServerCertificate=True; Trusted_Connection=true;MultipleActiveResultSets=True"));
 
 var app = builder.Build();
 
@@ -30,11 +38,15 @@ using (var scope=app.Services.CreateScope())
 {
     var dbcontext=scope.ServiceProvider.GetRequiredService<EmployeeContext>();
     dbcontext.Database.EnsureCreated();  //create the db
+    var userdbcontext=scope.ServiceProvider.GetRequiredService<UserContext>();
+    userdbcontext.Database.EnsureCreated();
 }
 
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication(); //This has to go before Authorization or your program will catch fire!!
 
 app.UseAuthorization();
 
